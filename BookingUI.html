@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <style>
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f9f9f9;
+        padding: 20px;
+        color: #333;
+      }
+
+      h3 {
+        text-align: center;
+        color: #2c3e50;
+      }
+
+      label {
+        display: block;
+        margin-top: 15px;
+        font-weight: 500;
+      }
+
+      select, input[type="text"], input[type="number"] {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        box-sizing: border-box;
+      }
+
+      button {
+        margin-top: 20px;
+        width: 100%;
+        padding: 12px;
+        background-color: #2ecc71;
+        color: white;
+        font-weight: bold;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+
+      button:hover {
+        background-color: #27ae60;
+      }
+
+      #loading {
+        margin-top: 15px;
+        text-align: center;
+        color: #2980b9;
+        font-style: italic;
+        display: none;
+      }
+
+      .form-container {
+        max-width: 400px;
+        margin: auto;
+        background-color: white;
+        padding: 25px 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="form-container">
+      <h3>Form Booking Nomor</h3>
+
+      <label>Jenis:
+        <select id="jenis">
+          <option value="Automatic">Automatic</option>
+          <option value="Manual">Manual</option>
+        </select>
+      </label>
+
+      <label>Nama PIC:
+        <input type="text" id="pic" placeholder="Masukkan nama lengkap">
+      </label>
+
+      <label>Jumlah:
+        <input type="number" id="jumlah" min="1" placeholder="Contoh: 5">
+      </label>
+
+      <div id="loading">⏳ Memproses permintaan, mohon tunggu...</div>
+
+      <button onclick="submit()">Submit</button>
+    </div>
+
+    <script>
+      function submit() {
+        const jenis = document.getElementById('jenis').value;
+        const pic = document.getElementById('pic').value.trim();
+        const jumlah = parseInt(document.getElementById('jumlah').value);
+        const loading = document.getElementById('loading');
+
+        if (!pic || !jumlah || jumlah < 1) {
+          alert('Isi semua kolom dengan benar.');
+          return;
+        }
+
+        loading.style.display = 'block';
+
+        google.script.run
+          .withSuccessHandler(function () {
+            loading.style.display = 'none';
+            google.script.host.close();
+          })
+          .processBooking(jenis, jumlah, pic);
+      }
+    </script>
+  </body>
+</html>
