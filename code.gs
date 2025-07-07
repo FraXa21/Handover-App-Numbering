@@ -154,7 +154,7 @@ function bookOthersWithRange(jumlah, jenis, pic) {
  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("2025");
  const data = sheet.getDataRange().getValues();
 
- const templateFile = DriveApp.getFileById("1c2eYVhvZqaRD7RzsOLTLkzfj4lJMlbkyKuN2o8Y83KY");
+ const templateFile = DriveApp.getFileById("YOUR_FOLDER_ID");
  const folderTujuan = DriveApp.getFoldersByName("File Excel Generate RI").next();
 
  // Cari nomor READY
